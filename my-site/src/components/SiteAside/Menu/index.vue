@@ -1,11 +1,18 @@
 <template>
     <nav class="menu-container">
-        <a v-for="item in item" :key="item.link" :href="item.link" :class="{selected: isSelected(item)}">
+        <RouterLink
+            v-for="item in items"
+            :key="item.link"
+            :to="{ name: item.name }"
+            :exact="item.exact"
+            active-class="selected"
+            exact-active-class=""
+        >
             <div class="icon">
                 <Icon :type="item.icon" />
             </div>
             <span>{{ item.title }}</span>
-        </a>
+        </RouterLink>
     </nav>
 </template>
 
@@ -17,32 +24,36 @@
         },
         data() {
             return {
-                item: [
+                items: [
                     {
-                        link: "/",
+                        name: "Home",
                         icon: "home",
                         title: "首页",
+                        exact: true
                     },
                     {
-                        link: "/blog",
+                        name: "Blog",
                         icon: "blog",
                         title: "文章",
-                        startWith: true
+                        exact: false
                     },
                     {
-                        link: "/about",
+                        name: "About",
                         icon: "about",
                         title: "关于我",
+                        exact: true
                     },
                     {
-                        link: "/project",
+                        name: "Project",
                         icon: "code",
                         title: "项目&效果",
+                        exact: true
                     },
                     {
-                        link: "/message",
+                        name: "Message",
                         icon: "chat",
                         title: "留言板",
+                        exact: true
                     },
                 ],
             };
@@ -56,8 +67,8 @@
                 } else {
                     return link === curPathName;
                 }
-            }
-        }
+            },
+        },
     };
 </script>
 
