@@ -137,7 +137,7 @@ const router = new VueRouter({
     // 当匹配到路径 /foo 时，渲染 Foo 组件
     { name:"foo", path: '/foo', component: Foo },
     // 当匹配到路径 /bar 时，渲染 Bar 组件
-  	{ name:"bar", path: '/bar', component: Bar }
+    { name:"bar", path: '/bar', component: Bar }
   ]
 })
 
