@@ -48,3 +48,34 @@
   2. **把选择的组件放到哪个位置？**
   3. **如何无刷新的切换组件？**
 
+```shell
+# 路由插件的使用
+npm i vue-router
+```
+
+```js
+import Vue from 'vue';
+import App from "./App.vue";
+import VueRouter from 'vue-router';
+
+Vue.use(VueRouter); // Vue.use(插件)  在Vue中安装插件
+
+// 路由配置
+const router = new VueRouter({
+  routes: [ // 路由规则
+    // 当匹配到路径 /foo 时，渲染 Foo 组件
+    { path: '/foo', component: Foo },
+    // 当匹配到路径 /bar 时，渲染 Bar 组件
+  	{ path: '/bar', component: Bar }
+  ]
+})
+
+new Vue({
+  router,
+  render: (h) => h(App),
+}).$mount("#app");
+```
+
+
+
+
