@@ -7,9 +7,7 @@
                 </div>
             </template>
             <template #default>
-                <div class="main">
-                    <RouterView />
-                </div>
+                <RouterView />
             </template>
         </Layout>
     </div>
@@ -35,6 +33,5 @@
     .left {
         height: 100%;
         width: 250px;
-        background: lightcoral;
     }
 </style>
