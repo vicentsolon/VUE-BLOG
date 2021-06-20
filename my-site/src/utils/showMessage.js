@@ -14,6 +14,7 @@ export default function (options = {}) {
     const type = options.type || "info";
     const duration = options.duration || 2000;
     const container = options.container || document.body;
+
     // 创造消息盒子
     const div = document.createElement("div");
     const iconDom = getComponentRootDom(Icon, {
@@ -22,10 +23,15 @@ export default function (options = {}) {
     const typeClassName = styles[`message-${type}`]
     div.innerHTML = `<span class="${styles.icon}">${iconDom.outerHTML}</span><div>${content}</div>`;
     div.className = `${styles.message} ${typeClassName}`;
+
     // 判断容器position是否改变
-    if (getComputedStyle(container).position == "static") {
-        container.style.position = "relative";
+    if (options.container) {
+        if (getComputedStyle(container).position == "static") {
+            container.style.position = "relative";
+        }
     }
+
+    // 将消息盒子添加进入容器
     container.appendChild(div);
 
     // 触发重绘
@@ -43,7 +49,6 @@ export default function (options = {}) {
             div.remove();
             //运行回调函数
             options.callback && options.callback();
-            container.style.position = null;
         }, {
             once: true
         });

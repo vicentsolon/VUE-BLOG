@@ -1,33 +1,29 @@
 <template>
     <div class="home-container" ref="container">
-        <h1>首页</h1>
-        <button @click="handleClick">点击提交</button>
-        <div class="test" ref="test"></div>
+        <ul v-if="banners.length > 0">
+            <li v-for="item in banners" :key="item.id">
+                <img :src="item.midImg" alt="">
+                <h2>{{ item.title }}</h2>
+                <h3>{{ item.description }}</h3>
+            </li>
+        </ul>
     </div>
 </template>
 
 <script>
+    import { getBanners } from "@/api/banner";
     export default {
-        methods: {
-            handleClick() {
-                this.$showMessage({
-                    content: "评论成功",
-                    type: "success",
-                    container: this.$refs.test,
-                    callback: function () {
-                        console.log("ended!!!");
-                    }
-                });
+        data() {
+            return {
+                banners: []
             }
         },
+        async created() {
+            this.banners = await getBanners();
+        }
     };
 </script>
 
 <style lang="less" scoped>
-    .test {
-        width: 300px;
-        height: 200px;
-        border: 2px solid;
-        margin: 0 auto;
-    }
+    
 </style>

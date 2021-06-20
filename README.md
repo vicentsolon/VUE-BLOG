@@ -213,3 +213,21 @@ function getComponentRootDom(comp, props){
 > 通过`ref`可以直接操作`dom`元素，甚至可能直接改动子组件，这些都不符合`vue`的设计理念。
 >
 > 除非迫不得已，否则不要使用`ref`
+
+## 获取远程数据
+1. 前后端分离
+2. 开发环境有跨域问题
+3. 生产环境一般没有跨域问题
+4. 解决开发环境的跨域问题 --> Mock --> 构建生产环镜下的真实数据响应
+
+> vue cli: https://cli.vuejs.org/zh/
+>
+> axios: https://github.com/axios/axios
+>
+> mockjs：http://mockjs.com/
+
+## 组件生命周期
+
+<img src="http://mdrs.yuanjin.tech/img/20200908051939.png" alt="image-20200908051939745" style="zoom:50%;" />
+
+<img src="http://mdrs.yuanjin.tech/img/20201206132819.png" alt="image-20201206132819263" style="zoom:50%;" />
