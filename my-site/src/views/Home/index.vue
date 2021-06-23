@@ -1,11 +1,8 @@
 <template>
-    <div class="home-container" ref="container">
-        <ul class="carousel-container" :style="{marginTop}">
+    <div class="home-container" ref="container" @wheel="handleWheel">
+        <ul class="carousel-container" :style="{marginTop}" @transitionend="handleTransitionEnd">
             <li v-for="item in banners" :key="item.id">
-                <!-- <img :src="item.midImg" alt="">
-                <h2>{{ item.title }}</h2>
-                <h3>{{ item.description }}</h3> -->
-                <CarouselItem />
+                <CarouselItem :carousel="item" />
             </li>
         </ul>
         <div class="icon icon-up" @click="switchTo(index - 1)" v-show="index >= 1">
@@ -32,8 +29,9 @@
         data() {
             return {
                 banners: [],
-                index: 1,
-                containerHeight: 0
+                index: 0,
+                containerHeight: 0,
+                switching: false
             };
         },
         async created() {
@@ -41,15 +39,38 @@
         },
         mounted() {
             this.containerHeight = this.$refs.container.clientHeight;
+            window.addEventListener("resize", this.handleResize);
         },
         computed: {
             marginTop() {
                 return -this.index * this.containerHeight + "px";
             },
         },
+        destroyed() {
+            window.removeEventListener("resize", this.handleResize);
+        },
         methods: {
             switchTo(i) {
                 this.index = i;
+            },
+            handleWheel(e) {
+                if (this.switching) {
+                    return;
+                }
+                if (e.deltaY > 0 && this.index < this.banners.length - 1) {
+                    this.index ++;
+                    this.switching = true;
+                }
+                if (e.deltaY < 0 && this.index > 0) {
+                    this.index --;
+                    this.switching = true;
+                }
+            },
+            handleTransitionEnd() {
+                this.switching = false;
+            },
+            handleResize() {
+                this.containerHeight = this.$refs.container.clientHeight;
             }
         },
     };
@@ -63,6 +84,7 @@
         height: 100%;
         position: relative;
         overflow: hidden;
+
         ul {
             margin: 0;
             padding: 0;
@@ -72,6 +94,7 @@
     .carousel-container {
         width: 100%;
         height: 100%;
+        transition: 500ms;
         li {
             width: 100%;
             height: 100%;
