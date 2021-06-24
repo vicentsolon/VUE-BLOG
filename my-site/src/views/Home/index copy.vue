@@ -1,5 +1,5 @@
 <template>
-    <div v-loading="isLoading" class="home-container" ref="container" @wheel="handleWheel">
+    <div class="home-container" ref="container" @wheel="handleWheel">
         <ul class="carousel-container" :style="{marginTop}" @transitionend="handleTransitionEnd">
             <li v-for="item in banners" :key="item.id">
                 <CarouselItem :carousel="item" />
@@ -14,6 +14,7 @@
         <ul class="indicator">
             <li v-for="(item, i) in banners" :key="item.id" :class="{ active: i === index}" @click="switchTo(i)"></li>
         </ul>
+        <Loading v-if="isLoading" />
     </div>
 </template>
 
@@ -21,10 +22,12 @@
     import { getBanners } from "@/api/banner";
     import CarouselItem from "./CarouselItem.vue";
     import Icon from "@/components/Icon";
+    import Loading from "@/components/Loading";
     export default {
         components: {
             CarouselItem,
-            Icon
+            Icon,
+            Loading
         },
         data() {
             return {

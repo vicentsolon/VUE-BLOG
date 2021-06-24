@@ -231,3 +231,79 @@ function getComponentRootDom(comp, props){
 <img src="http://mdrs.yuanjin.tech/img/20200908051939.png" alt="image-20200908051939745" style="zoom:50%;" />
 
 <img src="http://mdrs.yuanjin.tech/img/20201206132819.png" alt="image-20201206132819263" style="zoom:50%;" />
+
+## 自定义指令
+
+### 全局注册
+```js
+// mydirective 指令名称
+Vue.directive("mydirective", {
+  // 指令配置
+});
+```
+之后就能在所有组件中使用了
+
+### 局部注册
+在组件内进行注册
+```js
+export defualt {
+  directives: {
+    // mydirective 指令名称
+    mydirective: {
+      // 指令配置
+    }
+  }
+}
+```
+
+### 指令配置对象
+
+没有配置的指令，就像没有配置的组件一样，毫无意义
+
+`vue`支持在指令中配置一些**钩子函数**，在适当的时机，`vue`会调用这些钩子函数并传入适当的参数，以便开发者完成自己想做的事情。
+
+常用的钩子函数：
+
+```js
+// 指令配置对象
+{
+  bind(){
+    // 只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+  },
+  inserted(){
+    // 被绑定元素插入父节点时调用。
+  },
+  update(){
+    // 所在组件的 VNode 更新时调用
+  }
+}
+```
+
+### 配置简化
+
+比较多的时候，在配置自定义指令时，我们都会配置两个钩子函数
+
+```js
+{
+  bind(el, bingding){
+    
+  },
+  update(el, bingding){
+    
+  }
+}
+```
+
+这样，在元素绑定和更新时，都能运行到钩子函数
+
+如果这两个钩子函数实现的功能相同，可以直接把指令配置简化为一个单独的函数：
+
+```js
+function(el, bingding){
+  // 该函数会被同时设置到bind和update中
+}
+```
+
+> 利用上述知识，可满足大部分自定义指令的需求
+>
+> 更多的自定义指令用法见[官网](https://cn.vuejs.org/v2/guide/custom-directive.html)

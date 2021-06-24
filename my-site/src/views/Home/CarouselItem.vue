@@ -79,7 +79,6 @@
                 const rect = this.$refs.container.getBoundingClientRect();
                 this.mouseX = e.clientX - rect.left;
                 this.mouseY = e.clientY - rect.top;
-                console.log(this.mouseX, this.mouseY);
             },
             handleMouseLeave() {
                 this.mouseX = this.center.x;
