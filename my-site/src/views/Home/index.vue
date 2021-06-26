@@ -59,13 +59,12 @@
                 if (this.switching) {
                     return;
                 }
-                if (e.deltaY > 0 && this.index < this.banners.length - 1) {
+                if (e.deltaY > 10 && this.index < this.banners.length - 1) {
+                    this.switching = true;
                     this.index ++;
+                } else if (e.deltaY < -10 && this.index > 0) {
                     this.switching = true;
-                }
-                if (e.deltaY < 0 && this.index > 0) {
                     this.index --;
-                    this.switching = true;
                 }
             },
             handleTransitionEnd() {

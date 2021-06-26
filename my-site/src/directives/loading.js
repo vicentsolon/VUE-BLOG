@@ -16,7 +16,6 @@ function createLoadingImage() {
 
 export default function (el, buliding) {
     const isExistIamge = getLoadingImage(el);
-    console.log(isExistIamge);
     if (buliding.value) {
         if (!isExistIamge) {
             const img = createLoadingImage();
