@@ -1,18 +1,18 @@
 <template>
     <div v-loading="isLoading" class="home-container" ref="container" @wheel="handleWheel">
         <ul class="carousel-container" :style="{marginTop}" @transitionend="handleTransitionEnd">
-            <li v-for="item in banners" :key="item.id">
+            <li v-for="item in data" :key="item.id">
                 <CarouselItem :carousel="item" />
             </li>
         </ul>
         <div class="icon icon-up" @click="switchTo(index - 1)" v-show="index >= 1">
             <Icon type="arrowUp" />
         </div>
-        <div class="icon icon-down" @click="switchTo(index + 1)" v-show="index < banners.length - 1">
+        <div class="icon icon-down" @click="switchTo(index + 1)" v-show="index < data.length - 1">
             <Icon type="arrowDown" />
         </div>
         <ul class="indicator">
-            <li v-for="(item, i) in banners" :key="item.id" :class="{ active: i === index}" @click="switchTo(i)"></li>
+            <li v-for="(item, i) in data" :key="item.id" :class="{ active: i === index}" @click="switchTo(i)"></li>
         </ul>
     </div>
 </template>
@@ -21,23 +21,19 @@
     import { getBanners } from "@/api/banner";
     import CarouselItem from "./CarouselItem.vue";
     import Icon from "@/components/Icon";
+    import fetchData from "@/mixins/fetchData.js";
     export default {
+        mixins: [fetchData([])],
         components: {
             CarouselItem,
             Icon
         },
         data() {
             return {
-                banners: [],
                 index: 0,
                 containerHeight: 0,
                 switching: false,
-                isLoading: true
             };
-        },
-        async created() {
-            this.banners = await getBanners();
-            this.isLoading = false;
         },
         mounted() {
             this.containerHeight = this.$refs.container.clientHeight;
@@ -52,6 +48,9 @@
             window.removeEventListener("resize", this.handleResize);
         },
         methods: {
+            async fetchData()  {
+                return await getBanners(); // 获取banner数据
+            },
             switchTo(i) {
                 this.index = i;
             },
@@ -59,7 +58,7 @@
                 if (this.switching) {
                     return;
                 }
-                if (e.deltaY > 10 && this.index < this.banners.length - 1) {
+                if (e.deltaY > 10 && this.index < this.data.length - 1) {
                     this.switching = true;
                     this.index ++;
                 } else if (e.deltaY < -10 && this.index > 0) {
